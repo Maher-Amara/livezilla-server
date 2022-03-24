@@ -1,0 +1,19 @@
+CACHE MANIFEST
+#########################################################################################
+# LiveZilla lzm.appcache
+#
+# Copyright 2016 LiveZilla GmbH
+# All rights reserved.
+# LiveZilla is a registered trademark.
+#
+#########################################################################################
+# <build_date>2018-05-26_13.12.14</build_date>
+
+CACHE:
+js/jsglobal.js
+js/md5.js
+js/sha1.js
+js/sha256.js
+
+NETWORK:
+*

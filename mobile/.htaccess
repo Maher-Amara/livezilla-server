@@ -1,0 +1,9 @@
+#########################################################################################
+# LiveZilla .htaccess
+#
+# Copyright 2014 LiveZilla GmbH
+# All rights reserved.
+# LiveZilla is a registered trademark.
+#
+#########################################################################################
+AddType text/cache-manifest appcache

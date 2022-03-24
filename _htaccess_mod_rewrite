@@ -1,0 +1,8 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^/?knowledge-base/$ knowledgebase.php?depth=1 [QSA,L]
+RewriteRule ^/?knowledge-base/([a-zA-Z0-9_\-]+)/$ knowledgebase.php?article=$1&depth=2 [QSA,L]
+RewriteRule ^/?knowledge-base/([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)/$ knowledgebase.php?article=$2&depth=3 [QSA,L]
+RewriteRule ^/?knowledge-base/([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)/$ knowledgebase.php?article=$3&depth=4 [QSA,L]
+RewriteRule ^/?knowledge-base/([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)/([a-zA-Z0-9_\-]+)/$ knowledgebase.php?article=$4&depth=5 [QSA,L]
+</IfModule>

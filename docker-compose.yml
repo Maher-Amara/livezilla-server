@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    image: wordpress
+    links:
+      - db:mysql
+    ports:
+      - 80
+    restart: always
+
+  db:
+    image: mysql
+    ports:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+    restart: always

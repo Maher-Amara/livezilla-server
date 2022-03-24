@@ -1,0 +1,133 @@
+body{
+    height:100%;
+    background:transparent radial-gradient(#fff 60%,var(--main-floor-color)) repeat scroll 0 0;
+}
+html{height:100%;}
+
+
+input[type=text],input[type=password]{
+    font-size: 15px !important;
+}
+
+.login-input{
+    margin-top:15px;
+}
+
+#headline {
+    position: absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:115px;
+    border-bottom:0;
+}
+
+#headline-logo {
+    height:115px;
+    margin-top: 30px;
+}
+
+#login-container {
+    position: absolute;
+    background-color: #fff;
+    background-image: url('../img/login_bg.png');
+    background-repeat: no-repeat;
+    background-size: 556px 162px;
+    background-position: 0 0;
+    width:360px;
+    height:420px;
+    left:200px;
+    top:200px;
+    max-width:100%;
+	z-index:2;
+    box-shadow: 0 0 25px rgb(127, 146, 163, .9);
+}
+
+#login-headline {
+    position: absolute;
+    top:130px;
+    left:0;
+    right:0;
+    height:16px;
+    width:100%;
+    font-size:14px;
+    text-align:center;
+    font-weight:bold;
+}
+
+#login-headline-text {
+    color: #808080;
+    padding-left: 10px;
+}
+
+#login-form {
+    position: absolute;
+    top: 95px;
+    width: 100%;
+    padding:15px 25px;
+    box-sizing:border-box;
+}
+
+#orientation_btn {
+    position: absolute;
+    top: 215px;
+    left: 24px;
+}
+
+#configure_btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#user_status-outer {
+    position: absolute;
+    top: 260px;
+}
+
+#login-checkbox-div {
+    position: absolute;
+    left: 25px;
+    top: 160px;
+}
+
+#server_profile_selection{
+    height:28px;
+}
+
+#profile-selection-div {
+    position: absolute;
+    top: 175px;
+    left: 25px;
+    right: 25px;
+}
+
+#login-copyright-link {
+    position: absolute;
+    text-align:center;
+    width: 100%;
+    line-height:30px;
+    opacity:0.8;
+}
+
+#server_profile_selection-outer{
+    position:absolute;
+    left:0;
+    right:50px;
+}
+
+#login_btn {
+    position: absolute;
+    top: 260px;
+    right: 27px;
+    min-width:60px;
+    text-align: center;
+    padding: 11px 20px;
+    color:#fff;
+    background:#448cf2;
+    border:1px solid #448cf2;
+}
+
+#login_btn:hover{
+    background:#4085e5 !important;
+}

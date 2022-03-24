@@ -1,0 +1,1030 @@
+/* reset default */
+html, body, * {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+@media print {
+    .number {
+        margin: 10px;
+        background: white;
+        flex-grow: 1;
+        color: grey;
+    }
+
+    .number h1, .number h2 {
+        font-size: 18px;
+        padding: 0;
+        display: inline;
+    }
+
+    .number h1::after {
+        content: ': '
+    }
+
+    html, body, #content {
+        height: auto !important;
+    }
+
+    #reports {
+        margin: 0 !important;
+    }
+
+    .highlight-line-container, .data-dots, .shadow, #chatsBar-graph-container nav.buttons, .tooltip-container,
+    #ticketsBar-graph-container nav.buttons {
+        display: none !important;
+    }
+}
+
+#analytics-headline .active, #analytics-headline .active:hover {
+    background: #4487e0 !important;
+    color: white;
+}
+#analytics-headline .active span{
+    color: inherit;
+}
+
+#analytics-headline .lzm-tabs {
+    display: inline-block;
+}
+
+#left-button-list {
+    height: 100%;
+    flex-grow: 1;
+}
+
+#right-button-list {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 5px;
+}
+
+.lzm-dialog-headline2 {
+    padding: 6px 0;
+}
+
+
+/* pie graph */
+
+.graph-container .table-pie-wrapper svg, .graph-container .number svg {
+    margin: 0 20px;
+}
+
+.table-pie-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.pie-wrapper{
+    max-width: 340px;
+    margin:0 0 40px 10px;
+    box-shadow: none;
+    flex-basis: 48%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.c3-title {
+    font-weight: bold;
+}
+
+.table-pie-wrapper .table-wrapper {
+    flex-grow: 1;
+}
+
+.tops-table-container {
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.table-wrapper {
+    min-width: 300px;
+    flex-grow: 1;
+    margin:0 0 40px 0;
+    flex-basis: 48%;
+    background:#fff;
+}
+
+.table-headline {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 0 0 5px;
+    margin: 15px 0 10px 20px;
+    display: inline-block;
+    color:var(--blue);
+}
+
+td:nth-child(2) {
+    max-width: 15vw;
+    overflow: hidden;
+    word-break: normal;
+}
+
+td:nth-child(2) a {
+}
+
+.tops-table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.tops-table tr:nth-child(1) {
+    background-color: #fafafa;
+    line-height: 2;
+    font-weight: bold;
+}
+
+.tops-table tr {
+    padding: 5px;
+    height: 30px;
+}
+
+.table-show-more {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    cursor: pointer;
+    margin-top: 30px;
+    background: var(--blue);
+    color:#fff;
+    font-weight: bold;
+    border-top: 1px solid var(--main-floor-color);
+}
+
+.table-show-more:hover {
+    opacity:.8;
+}
+
+.tops-table td:nth-child(1n+3) {
+    text-align: center;
+}
+
+.tops-table td {
+    padding: 8px 15px;
+}
+
+.tops-table td:nth-child(1) {
+    padding: 8px;
+    text-align: center;
+    width:60px;
+}
+
+
+
+@media screen {
+    .print-table-container {
+        display: none;
+    }
+
+    #analytics-headline {
+        display: flex;
+    }
+}
+
+@media print {
+    .print-table-container {
+        display: block;
+    }
+
+    #analytics-headline {
+        display: none;
+    }
+
+    .print-table-section {
+        margin-top: 20px;
+        clear: both;
+    }
+
+    .print-table-section .print-table-section-headline {
+        font-size: 15px;
+    }
+
+    .print-table-data-container {
+        display: block;
+        /*margin-right: -6vw;*/
+        position: relative;
+        /*left: -6vw;*/
+    }
+
+    .print-table-data, .print-table-line-data {
+        margin: 0 0 10px 0;
+        float: left;
+    }
+
+    .print-table-line-headline {
+        width: 24vw;
+        background-color: #e3e3e3 !important;
+        font-size: 13px;
+        padding: 9px 0;
+        border-bottom: 1px solid white;
+        text-align: center;
+    }
+
+    .print-table-line-headline-text {
+        width: 24vw;
+    }
+
+    .bar-print-table-dati-container, .line-print-table-dati-container {
+        /*height: 800px;*/
+        width: 24vw;
+    }
+
+    .bar-print-table-datum, .line-print-table-datum {
+        width: 24vw;
+        height: 34px;
+        border-bottom: 1px solid white;
+        background-color: #f2f2f2;
+    }
+
+    .bar-print-table-datum-key, .line-print-table-datum-key {
+        /*border-bottom: 1px solid grey;*/
+        /*border-color: inherit;*/
+        text-align: center;
+        float: left;
+        width: 12vw;
+        padding: 10px 0;
+    }
+
+    .table-datum-key-text, .table-datum-value-text {
+        padding-top: 10px;
+        font-size: 11px;
+    }
+
+    .bar-print-table-datum-value, .line-print-table-datum-value {
+        text-align: center;
+        width: 12vw;
+        float: left;
+        padding: 10px 0;
+    }
+
+    .date-interval-info {
+        margin-top: -15px;
+        position: absolute;
+        top: 0;
+        font-weight: bolder;
+        font-size: 12px;
+    }
+}
+
+/*page layout*/
+
+h1 {
+    padding: 50px 50px 40px;
+    margin-left: 3%;
+}
+
+@media screen {
+    #content {
+        height: 100vh;
+    }
+}
+
+#content {
+    overflow: auto;
+}
+
+#reports {
+    max-width: 1062px;
+}
+
+#reports .NumberGraph-container, #TOPsKnowledgeBase-graph-container, #TOPsPages-graph-container, #TOPsVisitors-graph-container, #reports .TagGraph-container, #reports .TableGraph-container {
+    box-shadow: none;
+}
+
+.graph-container {
+    width: 100%;
+    vertical-align: top;
+    position: relative;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding-bottom:20px;
+}
+
+.LineGraph-container, .BarGraph-container{
+    background:#fff;
+}
+
+.svg-content-responsive {
+    display: block;
+    margin: 21px;
+}
+
+#picker {
+    background: #4487e0;
+}
+
+#picker:hover {
+    background: #3e8fdf !important;
+}
+
+#picker i {
+    color: #fff;
+    text-shadow: none;
+}
+
+#picker-text {
+    padding: 0 5px 0 0;
+    white-space: nowrap;
+    color: #fff;
+    margin-top: 4px;
+    font-weight: bold;
+}
+
+/* date picker */
+
+#daterangepicker, #datepicker {
+    visibility: hidden;
+}
+
+#picker div#picker-wrapper {
+    height: 43px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.month-wrapper .gap {
+    display: none;
+}
+
+#selector {
+    display: none;
+    position: fixed;
+    right: 20px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    border: 1px solid white;
+    border-radius: 3px;
+    top: 46px;
+}
+
+#selector .date-picker-wrapper.inline-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#selector input {
+    display: none;
+}
+
+div#selector div.day:hover {
+    background: #4487e0 !important;
+    color: white !important;
+}
+
+#selector .date-picker-wrapper, #selector .month-wrapper {
+    border: none;
+}
+
+#selector .shortcuts b {
+    display: none;
+}
+
+#selector .date-picker-wrapper .footer {
+    max-width: 120px;
+    background: #fafafa;
+    padding: 10px 6px;
+}
+
+.custom-shortcut:hover {
+    color: #999;
+}
+
+#selector .date-picker-wrapper span.custom-shortcut {
+    float: left;
+    padding: 4px 8px;
+}
+
+#selector .date-picker-wrapper a div.custom-shortcut {
+    text-decoration: none;
+    padding: 0 13px 3px 3px;
+    display: block;
+
+}
+
+#selector .date-picker-wrapper a {
+    color: #444;
+    text-decoration: none;
+}
+
+#selector .date-picker-wrapper a:hover {
+    color: #111;
+}
+
+#selector .date-picker-wrapper .month-wrapper table .day.real-today {
+    background: #3c78c7;
+    color: white !important;
+}
+
+#selector .date-picker-wrapper .month-wrapper, #selector .date-picker-wrapper.no-topbar {
+    padding-top: 0;
+}
+
+#selector .date-picker-wrapper table .caption th {
+    padding-bottom: 10px;
+}
+
+/* reports */
+#reports-page {
+    background: #e7e8ea;
+    height: 130%;
+    width: 100%;
+    padding-top: 43px;
+    padding-bottom: 60px;
+}
+
+#report-wrapper-availability {
+    page-break-before: avoid !important;
+}
+
+#availability-graph-container {
+    page-break-inside: auto !important;
+}
+
+.report-wrapper {
+    margin: 0 10px 70px 10px;
+    page-break-inside: avoid !important;
+    clear: both;
+}
+
+.report-wrapper-NumberGraph, .report-wrapper-TableGraph {
+
+}
+
+.svg-wrapper {
+    padding: 20px;
+}
+
+.report-headline {
+    font-size: 15px;
+    font-weight: normal;
+    margin: 20px 0 30px 0;
+    color: #778999;
+}
+
+.graph-container svg {
+    z-index: 1;
+    margin:60px 0 20px 0;
+}
+
+/* line graph */
+.graph-container nav .button {
+    color: white;
+    height: 80px;
+    float: left;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+    flex-grow:1;
+}
+
+.BarGraph-container nav .button {
+    height: 60px;
+}
+
+@media print {
+    .graph-container nav .button {
+        min-width: 115px;
+        font-size: 11px;
+    }
+}
+
+.month2 {
+    float: right !important;
+}
+
+.month-wrapper {
+    width: 500px !important;
+}
+
+.month-wrapper table tr{
+    background-color:#fff !important;
+}
+
+.graph-container nav .button .button-headline-div {
+    display: block;
+    padding: 8px 15px;
+    z-index: 100;
+    position: relative;
+    top: -80px;
+    background: rgba(255, 255, 255, 0.9);
+    min-height:30px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    color:#111;
+
+}
+
+.BarGraph-container nav .button .button-headline-div {
+    top: -60px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align:center;
+}
+
+.bar-graph.svg-content-responsive {
+    margin-top: 120px;
+}
+
+#bar-graph-availability {
+    margin-top: 50px;
+}
+
+.button.unselectable.disabled-button > .button-body {
+    color: #777;
+    font-weight: normal;
+}
+
+.graph-container nav .disabled-button span.button-headline {
+    border-color: grey;
+}
+
+.graph-container nav .disabled-button .button-background {
+    background-color: #eee !important;
+    color: grey;
+}
+
+.graph-container nav .disabled-button {
+    color: grey;
+}
+
+.graph-container nav .button .button-background {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    top: 0;
+    z-index: 10;
+}
+
+.BarGraph-container nav .button .button-background {
+    height: 60px;
+}
+
+.graph-container nav .button .button-body {
+    padding: 2px 15px;
+    z-index: 100;
+    position: relative;
+    top: -73px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.graph-container svg .inactive {
+    visibility: hidden;
+}
+
+.graph-container svg .shadow {
+    visibility: visible;
+    stroke: grey;
+    opacity: 0.5;
+}
+
+.grid-line {
+    stroke: #ececec;
+    stroke-width: 2px;
+}
+
+.y-axis .domain {
+    display: none;
+}
+
+.x-axis .domain {
+    stroke: #ececec;
+    stroke-width: 2px;
+}
+
+.range-axis .domain {
+    display: none;
+}
+
+.line-graph .x-axis .tick line {
+    stroke: #ececec;
+    stroke-width: 2px;
+}
+
+.line-graph .x-axis .tick text {
+    padding: 2px;
+}
+
+.line-graph .range-axis-ticks .tick line, .line-graph .range-axis-labels .tick line {
+    stroke: #ececec;
+    stroke-width: 2px;
+}
+
+.line-graph .range-axis-ticks .tick text, .line-graph .range-axis-labels .tick text {
+    padding: 2px;
+}
+
+.line-graph .range-axis-labels .tick text:hover {
+    color: grey;
+}
+
+.line-graph .range-axis-labels .tick text:hover {
+    cursor: pointer;
+}
+
+.LineGraph-container svg text {
+    fill: #222;
+    font-size: 100%;
+}
+
+.graph-container svg text.barGraph-button-text {
+    fill: #fff;
+}
+
+.barGraph-color-button, .barGraph-button-text {
+    cursor: pointer;
+}
+
+.graph-container div.tooltip, div.tooltip {
+    position: absolute;
+    text-align: center;
+}
+
+.TableGraph-container {
+    box-shadow: none;
+}
+
+.graph-container nav {
+    display: none;
+}
+
+.tooltip-container {
+    pointer-events: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 20px;
+    background: white;
+    position: absolute;
+    top: 125px;
+    visibility: hidden;
+    color: #666;
+    opacity: 0.9;
+    z-index: 200;
+}
+
+.graph-container .tooltip-container .color-box, .tooltip-container .color-box {
+    padding: 5px 5px 5px 0;
+}
+
+.graph-container .tooltip-container p, .tooltip-container p {
+    line-height: 1.4;
+}
+
+.tooltip-container h4, .tooltip-container h5 {
+    margin-bottom: 10px;
+}
+
+#visitorNumbers-graph-container, .NumberGraph-container {
+    background: transparent;
+    justify-content: space-between;
+    align-items: left;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: none;
+    margin: 0;
+    padding: 4px 0;
+}
+
+#source-table {
+    max-width: 500px;
+    margin: auto;
+}
+
+#source-table h2 {
+    padding-bottom: 10px;
+}
+
+.number-detail-key {
+    float: left;
+    clear: both;
+}
+
+.number-detail-value {
+    float: right;
+}
+
+@media screen {
+    .number {
+        flex-grow: 1;
+        align-self: flex-start;
+        background:#fff;
+        margin: 10px 10px 10px 0;
+    }
+
+    .number h2 {
+        padding: 8px 20px;
+        text-align: center;
+        font-size: 110%;
+        font-weight: normal;
+        line-height: 1.5;
+        background:#fff;
+    }
+
+    .number h1 {
+        padding: 12px 10px;
+        margin-left: 0;
+        text-align: center;
+        background: #fafafa;
+        font-size: 14px;
+        color: var(--blue);
+    }
+}
+
+.progress {
+    width: 300px;
+    height: 25px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    background-color: lightgrey;
+    position: relative;
+}
+
+#progress-color {
+    height: 25px;
+    width: 0;
+    border: 1px solid grey;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    z-index: 120;
+    background-color: lightgreen;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#progress-label {
+    text-align: center;
+    display: block;
+    margin-top: 5px;
+}
+
+/* spinner */
+.loader {
+    border: 8px solid var(--main-button-bg-color);
+    border-top: 8px solid var(--main-floor-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+}
+
+#view-loader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+}
+
+#center-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 95%;
+    flex-direction: column;
+
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* misc */
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.clear {
+    clear: both;
+}
+
+.nodisplay {
+    display: none !important;
+}
+
+::-moz-selection {
+    color: white;
+    background: grey;
+}
+
+::selection {
+    color: white;
+    background: grey;
+}
+
+#color-gradient {
+    float: right;
+    margin: 21px;
+    display: none !important;
+    justify-content: right;
+    flex-direction: column;
+    align-items: end;
+
+}
+
+#reports div#color-gradient-circles {
+    width: 160px;
+    height: 32px;
+    margin: 0;
+    display: flex;
+}
+
+#color-gradient-max-text {
+    padding: 0 8px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+.BarGraph-container nav.buttons {
+    height: 60px;
+    margin-bottom:40px;
+    display:flex;
+}
+
+.bar-graph-section {
+    margin-bottom: 40px;
+    clear: both;
+}
+
+#reports .BarGraph-container svg {
+    margin: 21px;
+}
+
+.gradient-circle, .data-circle{
+    flex-grow:1;
+    height: 26px;
+    margin:2px;
+}
+
+.barGraph-circle {
+    height: 32px;
+    border-radius: 16px;
+}
+
+.bar-line .bargraph-data-container {
+    margin: 0 21px 0 0;
+}
+
+.bargraph-section-headline-text {
+    font-size: 120%;
+    line-height: 3;
+    margin: 20px 21px 15px 21px;
+}
+
+.bar-line {
+    display:flex;
+}
+
+.bar-line-text {
+    font-size: 100%;
+    line-height: 2;
+    font-weight: normal;
+    margin: 0 0 0 21px;
+    display: flex;
+    flex-basis:35%;
+    justify-content: space-between;
+}
+
+.bar-line-text-total{
+    background: #4487e0;
+    color: #fff;
+    text-align: center;
+    width: 80px;
+    border: 2px solid #fff;
+}
+
+.bar-line-graph{
+    flex-basis:65%;
+}
+
+.bargraph-data-container {
+    display: flex;
+}
+
+.bar-line-text-id{
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.no-data {
+    background-color: #fafafa !important;
+}
+
+table tr:nth-child(odd){
+    background-color: #fafafa;
+}
+
+.bargraph-data-container .opened {
+    border-top: 2px solid #f24949;
+    margin-top:0;
+}
+
+.bargraph-data-container .part-time {
+    border-top-color: rgba(255,0,0,0.5);
+}
+
+#ticketNumbers-graph-container {
+    flex-direction: column;
+}
+
+#visitorNumbers-graph-container {
+    flex-direction: row;
+}
+
+#ticketSingleNumbers, #visitorNumber-numberContainer {
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#ticketSingleNumbers .number, #visitorNumber-numberContainer .number {
+    flex-grow: 1;
+}
+
+#inOut-pie-container, #visitor-source-pie-container {
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#ticketInOutNumbers {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+#ticketInOutNumbers .number {
+    align-self: stretch;
+}
+
+#ticketNumbersPieContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.pie {
+    margin: 5px;
+}
+
+.graph-container .pie svg, .c3-pie-wrapper svg{
+    margin: 0;
+    padding: 0 0 0 50px;
+}
+
+#visitor-number-source-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-self: flex-start;
+}
+
+#visitor-source-container {
+    display:flex;
+}
+
+#tickets_closed_overdue{
+    margin-right: 0;
+}
+
+#ticket_response_time, #email, #twitter, #facebook{
+    margin-left: 0;
+}
+
+#center-loader-text {
+    margin-bottom: 20px;
+}
+
+#report-wrapper-ticketTags .table-wrapper, #report-wrapper-chatTags .table-wrapper {
+    margin-left: 0;
+}

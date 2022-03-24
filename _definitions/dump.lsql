@@ -1,0 +1,1627 @@
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->config` (
+  `key` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `value` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE `<!--prefix-->images` (
+`id` INT UNSIGNED NOT NULL DEFAULT '0',
+`button_type` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+`image_type` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+`online` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT '0',
+`data` LONGTEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+PRIMARY KEY (`id`,`button_type`,`image_type`,`online`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE `<!--prefix-->roles` (
+`id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+`name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+`description` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+`permissions` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->administration_log` (
+  `id` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `value` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `trace` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `user` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `time` (`time`),
+  KEY `ip` (`ip`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->chat_archive` (
+  `time` int(11) unsigned NOT NULL DEFAULT '0',
+  `endtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `closed` int(11) unsigned NOT NULL DEFAULT '0',
+  `chat_id` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `external_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `fullname` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `internal_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `area_code` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `html` longtext COLLATE utf8_bin NOT NULL,
+  `plaintext` longtext COLLATE utf8_bin NOT NULL,
+  `transcript_text` longtext COLLATE utf8_bin NOT NULL,
+  `transcript_html` longtext COLLATE utf8_bin NOT NULL,
+  `email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `company` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `phone` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `call_me_back` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `iso_language` varchar(8) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `iso_country` varchar(5) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `host` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ip` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `gzip` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `transcript_sent` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `transcript_receiver` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `question` text COLLATE utf8_bin NOT NULL,
+  `customs` text COLLATE utf8_bin NOT NULL,
+  `subject` text COLLATE utf8_bin NOT NULL,
+  `ticket_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `wait` int(11) unsigned NOT NULL DEFAULT '0',
+  `duration` int(11) unsigned NOT NULL DEFAULT '0',
+  `accepted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `ended` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `chat_type` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `ref_url` varchar(2048) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `tags` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY `chat_id` (`chat_id`),
+  KEY `closed` (`closed`),
+  KEY `chat_type` (`chat_type`),
+  KEY `endtime` (`endtime`),
+  KEY `duration` (`duration`),
+  KEY `transcript_sent` (`transcript_sent`),
+  KEY `tags` (`tags`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->groups` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `name` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `dynamic` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `description` text COLLATE utf8_bin NOT NULL,
+  `external` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `internal` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `standard` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `opening_hours` text COLLATE utf8_bin NOT NULL,
+  `functions` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `chat_inputs_hidden` text COLLATE utf8_bin NOT NULL,
+  `ticket_inputs_hidden` text COLLATE utf8_bin NOT NULL,
+  `chat_inputs_required` text COLLATE utf8_bin NOT NULL,
+  `ticket_inputs_required` text COLLATE utf8_bin NOT NULL,
+  `chat_inputs_masked` text COLLATE utf8_bin NOT NULL,
+  `ticket_inputs_masked` text COLLATE utf8_bin NOT NULL,
+  `chat_inputs_cap` text COLLATE utf8_bin NOT NULL,
+  `ticket_inputs_cap` text COLLATE utf8_bin NOT NULL,
+  `max_chats` int(10) NOT NULL DEFAULT '0',
+  `visitor_filters` text COLLATE utf8_bin NOT NULL,
+  `ticket_sender_name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ticket_email_out` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ticket_email_in` text COLLATE utf8_bin NOT NULL,
+  `ticket_handle_unknown` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `chat_email_out` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ticket_assignment` text COLLATE utf8_bin NOT NULL,
+  `priorities` text COLLATE utf8_bin NOT NULL,
+  `priority_sleep` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `position` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `ticket_notifier` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `position` (`position`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->group_members` (
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `persistent` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_id`,`group_id`),
+  KEY `group_id` (`group_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->chat_forwards` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `initiator_operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sender_operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `target_operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `target_group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `visitor_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `browser_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `chat_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `info_text` mediumtext COLLATE utf8_bin NOT NULL,
+  `processed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `received` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `invite` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `auto` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `created` (`created`),
+  KEY `received` (`received`),
+  KEY `chat_id` (`chat_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->chat_posts` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `chat_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `time` int(11) unsigned NOT NULL DEFAULT '0',
+  `micro` int(11) unsigned NOT NULL DEFAULT '0',
+  `updated` int(11) unsigned NOT NULL DEFAULT '0',
+  `sender` varchar(65) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver` varchar(65) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_group` varchar(65) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_original` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `text` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `translation` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `translation_iso` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `received` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `noticed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `persistent` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `repost` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `sender_name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `browser_id` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `api_obj` text COLLATE utf8_bin NOT NULL,
+  `whisper` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  KEY `updated` (`updated`),
+  KEY `noticed` (`noticed`),
+  PRIMARY KEY (`id`,`receiver`,`micro`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->chat_requests` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `sender_system_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sender_group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_browser_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `event_action_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `text` mediumtext COLLATE utf8_bin NOT NULL,
+  `displayed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `accepted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `declined` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `canceled` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '2',
+  PRIMARY KEY (`id`),
+  KEY `receiver_browser_id` (`receiver_browser_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->events` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `creator` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `edited` int(10) unsigned NOT NULL DEFAULT '0',
+  `editor` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `pages_visited` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_on_site` int(10) unsigned NOT NULL DEFAULT '0',
+  `max_trigger_amount` int(10) unsigned NOT NULL DEFAULT '0',
+  `trigger_again_after` int(10) unsigned NOT NULL DEFAULT '0',
+  `trigger_again_page` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `not_declined` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `not_accepted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `not_in_chat` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_in_chat` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `chat_ends` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `priority` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `search_phrase` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `save_cookie` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `exclude_mobile` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `exclude_countries` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `include_countries` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data_conditions` TEXT CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->event_actions` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `eid` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `value` mediumtext COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `eid` (`eid`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->event_action_internals` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `trigger_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `created` (`created`),
+  KEY `receiver_user_id` (`receiver_user_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->event_action_receivers` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `action_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `action_id` (`action_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->event_action_senders` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `pid` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `priority` tinyint(2) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->event_funnels` (
+  `eid` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `uid` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ind` smallint(5) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`eid`,`uid`),
+  KEY `uid` (`uid`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->event_goals` (
+  `event_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `goal_id` int(10) unsigned NOT NULL DEFAULT '0',
+  UNIQUE KEY `prim` (`event_id`,`goal_id`),
+  KEY `goal_id` (`goal_id`),
+  KEY `event_id` (`event_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->event_triggers` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_browser_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `action_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `event_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `triggered` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `receiver_user_id` (`receiver_user_id`),
+  KEY `action_id` (`action_id`),
+  KEY `event_id` (`event_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->event_urls` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `eid` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `url` varchar(2048) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `referrer` varchar(2048) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `time_on_site` int(10) unsigned NOT NULL DEFAULT '0',
+  `blacklist` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `eid` (`eid`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->filters` (
+  `creator` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `editor` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `edited` int(10) unsigned NOT NULL DEFAULT '0',
+  `ip` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `expiredate` int(10) NOT NULL DEFAULT '0',
+  `visitor_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `reason` text COLLATE utf8_bin NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `exertion` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `languages` text COLLATE utf8_bin NOT NULL,
+  `countries` text COLLATE utf8_bin NOT NULL,
+  `allow_chats` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `allow_tickets` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `allow_tracking` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `email` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `subject` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->goals` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_bin NOT NULL,
+  `description` text COLLATE utf8_bin NOT NULL,
+  `conversion` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `ind` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `title` (`title`),
+  KEY `ind` (`ind`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->info` (
+  `version` varchar(15) COLLATE utf8_bin NOT NULL,
+  `chat_id` int(11) unsigned NOT NULL DEFAULT '11700',
+  `ticket_id` int(11) unsigned NOT NULL DEFAULT '11700',
+  `gtspan` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`version`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->operators` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `system_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `client_system_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `token` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `firstname` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `lastname` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `description` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `permissions` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `webspace` int(10) unsigned NOT NULL DEFAULT '0',
+  `first_active` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_active` int(10) unsigned NOT NULL DEFAULT '0',
+  `updated` int(10) unsigned NOT NULL DEFAULT '0',
+  `password` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `password_change_request` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `level` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `ip` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `typing` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `last_chat_allocation` int(10) unsigned NOT NULL DEFAULT '0',
+  `groups` text COLLATE utf8_bin NOT NULL,
+  `groups_status` text COLLATE utf8_bin NOT NULL,
+  `groups_hidden` text COLLATE utf8_bin NOT NULL,
+  `reposts` text COLLATE utf8_bin NOT NULL,
+  `languages` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `auto_accept_chats` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `login_ip_range` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `websites_users` text COLLATE utf8_bin NOT NULL,
+  `websites_config` text COLLATE utf8_bin NOT NULL,
+  `sign_off` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `bot` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `wm` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `wmohca` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `lweb` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `lapp` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `mobile_os` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `mobile_device_id` varchar(4096) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `mobile_background` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `mobile_ex` text COLLATE utf8_bin NOT NULL,
+  `max_chats` tinyint(1) NOT NULL DEFAULT '0',
+  `ldap` tinyint(1) NOT NULL DEFAULT '0',
+  `color` varchar(7) COLLATE utf8_bin NOT NULL DEFAULT '#bebebe',
+  `image` mediumtext COLLATE utf8_bin NOT NULL,
+  `api_url` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `welcome_message` varchar(1024) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `status_info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `skills` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `roles` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  KEY `updated` (`updated`),
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->operator_logins` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ip` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `time` int(11) unsigned NOT NULL DEFAULT '0',
+  `password` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  KEY `time` (`time`),
+  PRIMARY KEY (`user_id`,`password`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->operator_status` (
+  `time` int(11) unsigned NOT NULL,
+  `confirmed` int(11) unsigned NOT NULL,
+  `internal_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`time`,`internal_id`,`status`),
+  KEY `time` (`time`),
+  KEY `internal_id` (`internal_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->predefined` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `internal_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `lang_iso` varchar(5) COLLATE utf8_bin NOT NULL,
+  `invitation_manual` mediumtext COLLATE utf8_bin NOT NULL,
+  `invitation_auto` mediumtext COLLATE utf8_bin NOT NULL,
+  `welcome` mediumtext COLLATE utf8_bin NOT NULL,
+  `chat_info_offline` mediumtext COLLATE utf8_bin NOT NULL,
+  `website_push_manual` mediumtext COLLATE utf8_bin NOT NULL,
+  `website_push_auto` mediumtext COLLATE utf8_bin NOT NULL,
+  `chat_info` mediumtext COLLATE utf8_bin NOT NULL,
+  `call_me_back_info` mediumtext COLLATE utf8_bin NOT NULL,
+  `ticket_info` mediumtext COLLATE utf8_bin NOT NULL,
+  `browser_ident` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_default` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `auto_welcome` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `editable` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `email_chat_transcript` mediumtext COLLATE utf8_bin NOT NULL,
+  `email_ticket_responder` mediumtext COLLATE utf8_bin NOT NULL,
+  `email_ticket_reply` mediumtext COLLATE utf8_bin NOT NULL,
+  `subject_chat_transcript` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `subject_ticket_responder` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `subject_ticket_reply` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email_chat_transcript_html` text COLLATE utf8_bin NOT NULL,
+  `email_ticket_responder_html` text COLLATE utf8_bin NOT NULL,
+  `email_ticket_reply_html` text COLLATE utf8_bin NOT NULL,
+  `tos_chat` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tos_ticket` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tos_callback` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `auto_close_operator` text COLLATE utf8_bin NOT NULL,
+  `auto_close_customer` text COLLATE utf8_bin NOT NULL,
+  `ticket_invite_auto` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alloc` (`group_id`,`lang_iso`,`internal_id`),
+  KEY `internal_id` (`internal_id`),
+  KEY `group_id` (`group_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->resources` (
+  `id` varchar(190) COLLATE utf8_bin NOT NULL,
+  `owner` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner_group` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `editor` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `value` longtext COLLATE utf8_bin NOT NULL,
+  `edited` int(11) unsigned NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `created` int(11) unsigned NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL,
+  `discarded` tinyint(1) unsigned NOT NULL,
+  `parentid` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `size` bigint(20) unsigned NOT NULL,
+  `tags` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `languages` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `kb_public` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `kb_bot` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `kb_ft_search` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `shortcut_word` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `order_key` int(11) NOT NULL DEFAULT '0',
+  `in_widget` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
+  `chat_id` int(11) NOT NULL DEFAULT '0',
+  `related` text COLLATE utf8_bin NOT NULL,
+  UNIQUE KEY `id` (`id`),
+  KEY `edited` (`edited`),
+  KEY `parentid` (`parentid`),
+  KEY `languages` (`languages`),
+  KEY `kb_public` (`kb_public`),
+  KEY `kb_bot` (`kb_bot`),
+  KEY `order_key` (`order_key`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->auto_replies` (
+  `id` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `resource_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `tags` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `search_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `answer` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `new_window` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `language` varchar(7) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `send` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `waiting` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `inactivity_internal` int(11) NOT NULL DEFAULT '-1',
+  `inactivity_external` int(11) NOT NULL DEFAULT '-1',
+  `inactivity_close` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `tags` (`tags`),
+  KEY `search_type` (`search_type`),
+  KEY `owner_id` (`owner_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs` (
+  `year` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `mtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `sessions` int(10) unsigned NOT NULL DEFAULT '0',
+  `visitors_unique` int(10) unsigned NOT NULL DEFAULT '0',
+  `conversions` int(10) unsigned NOT NULL DEFAULT '0',
+  `aggregated` int(10) unsigned NOT NULL DEFAULT '0',
+  `chats_forwards` int(10) unsigned NOT NULL DEFAULT '0',
+  `chats_posts_internal` int(10) unsigned NOT NULL DEFAULT '0',
+  `chats_posts_external` int(10) unsigned NOT NULL DEFAULT '0',
+  `avg_time_site` double unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`),
+  KEY `time` (`time`),
+  KEY `aggregated` (`aggregated`),
+  KEY `mtime` (`mtime`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_availabilities` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `hour` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `seconds` int(4) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`user_id`,`hour`,`status`,`group_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_feedbacks` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  `ca` double unsigned NOT NULL DEFAULT '0',
+  `cb` double unsigned NOT NULL DEFAULT '0',
+  `cc` double unsigned NOT NULL DEFAULT '0',
+  `cd` double unsigned NOT NULL DEFAULT '0',
+  `ce` double unsigned NOT NULL DEFAULT '0',
+  `cf` double unsigned NOT NULL DEFAULT '0',
+  `cg` double unsigned NOT NULL DEFAULT '0',
+  `ch` double unsigned NOT NULL DEFAULT '0',
+  `ci` double unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`operator_id`,`group_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_browsers` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `browser` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`browser`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_knowledgebase` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `res_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `views` int(10) unsigned NOT NULL DEFAULT '0',
+  `rate_amount` int(10) unsigned NOT NULL DEFAULT '0',
+  `rate_positive` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`res_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_chats` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `hour` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  `accepted` int(10) unsigned NOT NULL DEFAULT '0',
+  `declined` int(10) unsigned NOT NULL DEFAULT '0',
+  `avg_duration` double unsigned NOT NULL DEFAULT '0',
+  `avg_waiting_time` double unsigned NOT NULL DEFAULT '0',
+  `avg_response_time` double unsigned NOT NULL DEFAULT '0',
+  `chat_posts` int(10) unsigned NOT NULL DEFAULT '0',
+  `multi` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `invites` int(10) unsigned NOT NULL DEFAULT '0',
+  `invites_auto` int(10) unsigned NOT NULL DEFAULT '0',
+  `invites_accepted` int(10) unsigned NOT NULL DEFAULT '0',
+  `invites_declined` int(10) unsigned NOT NULL DEFAULT '0',
+  `device_tablet` int(10) unsigned NOT NULL DEFAULT '0',
+  `device_mobile` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`user_id`,`hour`,`group_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_tickets` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `hour` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  `open` int(10) unsigned NOT NULL DEFAULT '0',
+  `in_progress` int(10) unsigned NOT NULL DEFAULT '0',
+  `pending` int(10) unsigned NOT NULL DEFAULT '0',
+  `closed` int(10) unsigned NOT NULL DEFAULT '0',
+  `avg_close_time` double unsigned NOT NULL DEFAULT '0',
+  `overdue` int(10) unsigned NOT NULL DEFAULT '0',
+  `deleted` int(10) unsigned NOT NULL DEFAULT '0',
+  `messages` int(10) unsigned NOT NULL DEFAULT '0',
+  `responses` int(10) unsigned NOT NULL DEFAULT '0',
+  `avg_response_time` double unsigned NOT NULL DEFAULT '0',
+  `resolves` int(10) unsigned NOT NULL DEFAULT '0',
+  `avg_resolve_time` double unsigned NOT NULL DEFAULT '0',
+  `device_tablet` int(10) unsigned NOT NULL DEFAULT '0',
+  `device_mobile` int(10) unsigned NOT NULL DEFAULT '0',
+  `email_in` int(10) unsigned NOT NULL DEFAULT '0',
+  `email_converted` int(10) unsigned NOT NULL DEFAULT '0',
+  `email_out` int(10) unsigned NOT NULL DEFAULT '0',
+  `facebook_in` int(10) unsigned NOT NULL DEFAULT '0',
+  `facebook_out` int(10) unsigned NOT NULL DEFAULT '0',
+  `twitter_in` int(10) unsigned NOT NULL DEFAULT '0',
+  `twitter_out` int(10) unsigned NOT NULL DEFAULT '0',
+  `source_email` int(10) unsigned NOT NULL DEFAULT '0',
+  `source_phone` int(10) unsigned NOT NULL DEFAULT '0',
+  `source_misc` int(10) unsigned NOT NULL DEFAULT '0',
+  `source_chat` int(10) unsigned NOT NULL DEFAULT '0',
+  `source_feedback` int(10) unsigned NOT NULL DEFAULT '0',
+  `source_facebook` int(10) unsigned NOT NULL DEFAULT '0',
+  `source_twitter` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`user_id`,`group_id`,`hour`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_cities` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `city` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`city`),
+  KEY `city` (`city`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_countries` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `country` varchar(2) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`country`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_crawlers` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `crawler` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`crawler`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_domains` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `domain` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`domain`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_durations` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `duration` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`duration`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_goals` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `hour` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `goal` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`hour`,`goal`),
+  KEY `target` (`goal`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_events` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `hour` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `event_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`hour`,`event_id`),
+  KEY `target` (`event_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_goals_queries` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `goal` int(10) unsigned NOT NULL DEFAULT '0',
+  `query` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`goal`,`query`),
+  KEY `target` (`goal`),
+  KEY `query` (`query`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_isps` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `isp` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`isp`),
+  KEY `isp` (`isp`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_languages` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `language` varchar(5) COLLATE utf8_bin NOT NULL,
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`language`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_pages` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `url` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`url`),
+  KEY `url` (`url`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_pages_entrance` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `url` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`url`),
+  KEY `url` (`url`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_pages_exit` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `url` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`url`),
+  KEY `url` (`url`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_queries` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `query` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`query`,`type`),
+  KEY `query` (`query`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_tags` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `tag` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`tag`,`type`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_referrers` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `referrer` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`referrer`),
+  KEY `referrer` (`referrer`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_regions` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `region` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`region`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_resolutions` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `resolution` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`resolution`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_search_engines` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `domain` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`domain`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_systems` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `system` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`system`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_visitors` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `hour` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `visitors_unique` int(10) unsigned NOT NULL DEFAULT '0',
+  `page_impressions` int(10) unsigned NOT NULL DEFAULT '0',
+  `visitors_recurring` int(10) unsigned NOT NULL DEFAULT '0',
+  `bounces` int(10) unsigned NOT NULL DEFAULT '0',
+  `conversions` int(10) unsigned NOT NULL DEFAULT '0',
+  `search_engine` int(10) unsigned NOT NULL DEFAULT '0',
+  `from_referrer` int(10) unsigned NOT NULL DEFAULT '0',
+  `browser_instances` int(10) unsigned NOT NULL DEFAULT '0',
+  `js` int(10) unsigned NOT NULL DEFAULT '0',
+  `on_chat_page` int(10) unsigned NOT NULL DEFAULT '0',
+  `device_tablet` int(10) unsigned NOT NULL DEFAULT '0',
+  `device_mobile` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`hour`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->stats_aggs_visits` (
+  `year` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `month` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `day` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `visits` int(10) unsigned NOT NULL DEFAULT '0',
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`year`,`month`,`day`,`visits`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->tickets` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `target_group_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `hash` varchar(32) COLLATE utf8_bin NOT NULL,
+  `channel_type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `sub_channel` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `iso_language` varchar(5) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `last_update` int(10) unsigned NOT NULL DEFAULT '0',
+  `wait_begin` int(10) NOT NULL DEFAULT '2000000000',
+  `channel_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `channel_conversation_id` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `channel_unique_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `auto_status_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `auto_status_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `priority` tinyint(1) NOT NULL DEFAULT '2',
+  `salt` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `tags` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `last_update` (`last_update`),
+  KEY `deleted` (`deleted`),
+  KEY `wait_begin` (`wait_begin`),
+  KEY `target_group_id` (`target_group_id`),
+  KEY `tags` (`tags`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_watcher` (
+  `ticket_id` int(10) unsigned NOT NULL,
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `created` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ticket_id`,`operator_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_attachments` (
+  `res_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `parent_id` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`res_id`, `parent_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->signatures` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `signature` text COLLATE utf8_bin NOT NULL,
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `default` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `operator_id` (`operator_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_emails` (
+  `email_id` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `mailbox_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sender_email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sender_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sender_replyto` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sender_cc` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `receiver_email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `edited` int(10) unsigned NOT NULL DEFAULT '0',
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `subject` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` LONGTEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body_html` LONGTEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `editor_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`email_id`,`group_id`),
+  KEY `mailbox_id` (`mailbox_id`),
+  KEY `edited` (`edited`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->mailboxes` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `exec_operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `username` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `password` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `host` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `port` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `delete` smallint(5) NOT NULL DEFAULT '-1',
+  `authentication` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sender_name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ssl` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `default` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `last_connect` int(10) unsigned NOT NULL DEFAULT '0',
+  `connect_frequency` int(10) unsigned NOT NULL DEFAULT '0',
+  `framework` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT 'ZEND',
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_customs` (
+  `ticket_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `message_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `custom_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `value` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`ticket_id`,`message_id`,`custom_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_editors` (
+  `ticket_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `editor_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `sub_status` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `time` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`ticket_id`),
+  KEY `time` (`time`),
+  KEY `status` (`status`),
+  KEY `editor_id` (`editor_id`),
+  KEY `sub_status` (`sub_status`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_messages` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `time` int(11) unsigned NOT NULL,
+  `created` int(11) unsigned NOT NULL,
+  `ticket_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `text` LONGTEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `html` LONGTEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fullname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email_cc` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email_bcc` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `company` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `ip` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `phone` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `call_me_back` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `country` varchar(5) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `sender_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `channel_id` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `hash` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `subject` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `ticket_id` (`ticket_id`),
+  KEY `time` (`time`),
+  KEY `hash` (`hash`),
+  KEY `type` (`type`),
+  UNIQUE KEY `channel_id` (`channel_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitors` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `entrance` int(10) unsigned NOT NULL DEFAULT '0',
+  `closed` int(10) unsigned NOT NULL DEFAULT '0',
+  `edited` int(10) unsigned NOT NULL DEFAULT '0',
+  `host` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ip` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `system` int(11) unsigned NOT NULL DEFAULT '0',
+  `browser` int(11) unsigned NOT NULL DEFAULT '0',
+  `visits` int(11) unsigned NOT NULL DEFAULT '0',
+  `visit_id` varchar(7) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `visit_latest` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `visit_last` int(10) unsigned NOT NULL DEFAULT '0',
+  `resolution` int(11) unsigned NOT NULL DEFAULT '0',
+  `language` varchar(5) COLLATE utf8_bin NOT NULL,
+  `country` varchar(2) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `city` int(10) unsigned NOT NULL DEFAULT '0',
+  `region` int(10) unsigned NOT NULL DEFAULT '0',
+  `isp` int(10) unsigned NOT NULL DEFAULT '0',
+  `timezone` varchar(24) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `latitude` double NOT NULL DEFAULT '0',
+  `longitude` double NOT NULL DEFAULT '0',
+  `geo_result` int(10) unsigned NOT NULL DEFAULT '0',
+  `js` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `signature` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `device` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `ss_stream` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`,`entrance`),
+  UNIQUE KEY `visit_id` (`visit_id`),
+  KEY `signature` (`signature`),
+  KEY `language` (`language`),
+  KEY `country` (`country`),
+  KEY `city` (`city`),
+  KEY `region` (`region`),
+  KEY `isp` (`isp`),
+  KEY `system` (`system`),
+  KEY `id` (`id`),
+  KEY `ip` (`ip`),
+  KEY `closed` (`closed`),
+  KEY `edited` (`edited`),
+  KEY `browser` (`browser`),
+  KEY `resolution` (`resolution`),
+  KEY `visit_latest` (`visit_latest`),
+  KEY `timezone` (`timezone`),
+  KEY `entrance` (`entrance`),
+  KEY `data_id` (`data_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_comments` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `visitor_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `comment` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `visitor_id` (`visitor_id`),
+  KEY `created` (`created`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_browsers` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `visitor_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `visit_id` varchar(7) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_active` int(10) unsigned NOT NULL DEFAULT '0',
+  `closed` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_chat` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `query` int(10) unsigned NOT NULL DEFAULT '0',
+  `url_entrance` int(10) unsigned NOT NULL DEFAULT '0',
+  `url_exit` int(10) unsigned NOT NULL DEFAULT '0',
+  `pre_message` mediumtext COLLATE utf8_bin NOT NULL,
+  `overlay` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `overlay_container` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `visit_id` (`visit_id`),
+  KEY `query` (`query`),
+  KEY `last_active` (`last_active`),
+  KEY `closed` (`closed`),
+  KEY `is_chat` (`is_chat`),
+  KEY `created` (`created`),
+  KEY `visitor_id` (`visitor_id`),
+  KEY `overlay` (`overlay`),
+  KEY `overlay_container` (`overlay_container`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_browser_urls` (
+  `browser_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `entrance` int(10) unsigned NOT NULL DEFAULT '0',
+  `closed` int(10) unsigned NOT NULL DEFAULT '0',
+  `referrer` int(10) unsigned NOT NULL DEFAULT '0',
+  `url` int(10) unsigned NOT NULL DEFAULT '0',
+  `params` text COLLATE utf8_bin NOT NULL,
+  `untouched` text COLLATE utf8_bin NOT NULL,
+  `title` text COLLATE utf8_bin NOT NULL,
+  `ref_untouched` text COLLATE utf8_bin NOT NULL,
+  `is_entrance` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_exit` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `area_code` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`entrance`,`browser_id`),
+  KEY `browser_id` (`browser_id`),
+  KEY `referrer` (`referrer`),
+  KEY `entrance` (`entrance`),
+  KEY `closed` (`closed`),
+  KEY `is_entrance` (`is_entrance`),
+  KEY `is_exit` (`is_exit`),
+  KEY `url` (`url`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_chats` (
+  `visitor_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `browser_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `visit_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `chat_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `priority` tinyint(1) unsigned NOT NULL DEFAULT '2',
+  `call_me_back` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `typing` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `waiting` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `first_active` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_active` int(10) unsigned NOT NULL DEFAULT '0',
+  `request_operator` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `request_group` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `allocated` int(11) unsigned NOT NULL DEFAULT '0',
+  `archive_created` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `internal_active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `internal_closed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `internal_declined` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `external_active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `external_close` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `exit` int(11) unsigned NOT NULL DEFAULT '0',
+  `chat_ticket_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `response_time` int(11) unsigned NOT NULL DEFAULT '0',
+  `chat_posts` int(11) unsigned NOT NULL DEFAULT '0',
+  `queue_posts` text COLLATE utf8_bin NOT NULL,
+  `init_chat_with` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `translation` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `history` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `dgc` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `subject` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`visitor_id`,`browser_id`,`visit_id`,`chat_id`),
+  KEY `chat_id` (`chat_id`),
+  KEY `exit` (`exit`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_chat_operators` (
+  `chat_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `declined` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `dtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `ltime` int(10) unsigned NOT NULL DEFAULT '0',
+  `jtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `alloc` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`user_id`,`chat_id`),
+  KEY `chat_id` (`chat_id`),
+  KEY `status` (`status`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_browsers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `browser` varchar(255) COLLATE utf8_bin NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `browser` (`browser`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_cities` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `city` (`city`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_crawlers` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `crawler` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `crawler` (`crawler`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_domains` (
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `domain` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `external` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `search` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `domain` (`domain`),
+  KEY `search` (`search`),
+  KEY `external` (`external`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_isps` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `isp` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `isp` (`isp`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_pages` (
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT,
+  `domain` int(10) unsigned NOT NULL DEFAULT '0',
+  `path` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ` (`domain`,`path`),
+  KEY `domain` (`domain`),
+  KEY `path` (`path`),
+  KEY `title` (`title`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_paths` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `path` (`path`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_queries` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `query` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `query` (`query`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_regions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `region` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `region` (`region`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_resolutions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resolution` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `resolution` (`resolution`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_systems` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `system` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `system` (`system`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_data_titles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `confirmed` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `title` (`title`),
+  KEY `confirmed` (`confirmed`)
+) ENGINE=<!--engine-->  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->visitor_goals` (
+  `visitor_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `goal_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `first_visit` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `query` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`visitor_id`,`goal_id`),
+  KEY `visitor_id` (`visitor_id`),
+  KEY `goal_id` (`goal_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_logs` (
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `ticket_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `action` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `value_old` text COLLATE utf8_bin NOT NULL,
+  `value_new` text COLLATE utf8_bin NOT NULL,
+  `message_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`created`),
+  KEY `time` (`time`),
+  KEY `ticket_id` (`ticket_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_comments` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `ticket_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `message_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `comment` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ticket_id` (`ticket_id`),
+  KEY `created` (`created`),
+  KEY `time` (`time`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 CHECKSUM=0 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->push_messages` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `device_id` varchar(4096) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `device_hash` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `device_os` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `chat_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `chat_partner_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `push_key` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `push_value` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `IP` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sent` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IP` (`IP`,`device_hash`),
+  UNIQUE KEY `chat_id` (`chat_id`,`device_hash`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->data_updates` (
+  `update_tickets` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `update_archive` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `update_feedbacks` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `update_emails` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `update_events` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `update_vouchers` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `update_filters` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `update_reports` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`update_tickets`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->data_cache` (
+  `key` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data` longtext COLLATE utf8_bin NOT NULL,
+  `time` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`key`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->social_media_channels` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `page_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `stream_type` int(10) unsigned NOT NULL DEFAULT '0',
+  `token` text COLLATE utf8_bin NOT NULL,
+  `token_expire` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_connect` int(10) unsigned NOT NULL DEFAULT '0',
+  `data_since` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `connect_frequency` int(10) unsigned NOT NULL DEFAULT '0',
+  `track` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->user_data` (
+  `id` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `create` int(10) unsigned NOT NULL DEFAULT '0',
+  `h_fullname` varchar(254) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `h_email` varchar(254) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `h_company` varchar(254) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `h_phone` varchar(254) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `h_customs` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `h_text` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->feedbacks` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `chat_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ticket_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `resource_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `user_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `group_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ip_hash` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->feedback_criteria` (
+  `fid` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `cid` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `value` varchar(512) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`fid`,`cid`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->feedback_criteria_config` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `title` varchar(128) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->codes` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `code` longtext COLLATE utf8_bin NOT NULL,
+  `element` longtext COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->knowledgebase_queries` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `query` int(10) unsigned NOT NULL DEFAULT '0',
+  `ip_hash` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->knowledgebase_views` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `res_id` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->ticket_subs` (
+  `id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `parent_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`,`type`,`parent_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###CREATE TABLE IF NOT EXISTS `<!--prefix-->operator_backups` (
+  `backup_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `operator_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data_id` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `data` longtext COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`operator_id`,`data_id`)
+) ENGINE=<!--engine--> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+###TRUNCATE `<!--prefix-->info`;
+
+###INSERT INTO `<!--prefix-->info` (`version` ,`chat_id` ,`ticket_id`, `gtspan`) VALUES ('<!--version-->', '11700', '11700', '0');
+
+###INSERT INTO `<!--prefix-->feedback_criteria_config` (`id`, `type`, `name`, `title`) VALUES
+('d0', 0, 'Knowledge', '<!--lang_client_feedback_knowledge-->'),
+('d1', 0, 'Friendliness', '<!--lang_client_feedback_friendliness-->'),
+('d2', 0, 'Responsiveness', '<!--lang_client_feedback_responsiveness-->'),
+('d3', 0, 'Overall', '<!--lang_client_feedback_overall-->'),
+('d4', 1, 'Comment', '<!--lang_client_feedback_comment-->');
+
+###INSERT INTO `<!--prefix-->roles` (`id` ,`name` ,`description`, `permissions`) VALUES ('admin_permission', 'Administration', 'Full permission', '2220222111111210102100211111111100102111111011133011111111111');
