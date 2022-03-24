@@ -51,3 +51,38 @@ LiveZilla stores your business’ chat and email transcripts to its database. Th
 - Data API
 - Widget API
 - Chat BOT API
+
+# Install LiveZilla on Linux
+1. Login to server using SSH
+2. Go to document root of the domain which you need to install LiveZilla.
+
+```
+#cd /home/user/public_html
+```
+3. Download LiveZilla Server
+
+
+```
+#wget https://github.com/Maher-Amara/livezilla-server/archive/refs/heads/main.zip
+```
+4. Unzip the file “main.zip”.
+
+```
+#unzip main.zip
+```
+5. Now open your web browser and enter http://yourdomainname/livezilla
+6. Before installing LiveZilla you need to create database for LiveZilla.
+
+```
+#mysql
+
+>create database livezilla;
+
+>create ‘user_livezilla’@’localhost’;
+
+>set password for ‘user_livezilla’@’localhost’=password(“password”);
+
+>grant all privileges on livezilla.* to user_livezilla@localhost identified by ‘password’;
+```
+7. You will get below window and you can install LiveZilla from here.
+![install-LiveZilla1](https://user-images.githubusercontent.com/61565955/159965070-7a7294bf-e7ca-449c-8fd4-98ebb4d8fcc1.png)
