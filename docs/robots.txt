@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+Disallow: /cgi-bin/
+Sitemap: https://maher-amara.github.io/livezilla-server/sitemap.xml
