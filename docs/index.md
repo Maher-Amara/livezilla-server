@@ -1,8 +1,3 @@
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/61565955/159957196-b9a858f9-ae76-4d01-92c5-3808ec7bc01e.png" width="400" alt="livezilla_logo">
-</p>
-
-
 # LiveZilla Server
 
 LiveZilla is a help desk software that offers a help desk solution for small companies to large businesses. The platform allows you to connect with customers and potential clients. LiveZilla has an automated chat invite feature that visitors can easily see. The system then enables you to send and receive attachments, such as pictures, videos, and documents, allowing you to encourage visitors to avail of your products or services. The software also sends you notifications in cases of problems, as well as reports. LiveZilla's knowledge base helps you in creating email prompts and queries that convert visitors to clients. The customizable system enables you to match LiveZilla's automated chatbox to your company's theme. You can also decide where to put the chatbox so it will not interfere with other aspects of your website. LiveZilla's location and transcript reports help you monitor your agents and visitors.
